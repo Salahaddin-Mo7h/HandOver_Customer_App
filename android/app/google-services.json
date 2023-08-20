@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33305840488",
+    "project_id": "handovertestapp",
+    "storage_bucket": "handovertestapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33305840488:android:a6b14dfc8a9a50a4a3a4dd",
+        "android_client_info": {
+          "package_name": "com.example.customer_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33305840488-8ord66k2vv86k4t546r99emcq8gkv091.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaDoq4sSSJlgMOHsvUpNqHgahAStXT6N8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33305840488-8ord66k2vv86k4t546r99emcq8gkv091.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
