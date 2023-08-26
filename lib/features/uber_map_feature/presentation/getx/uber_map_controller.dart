@@ -271,7 +271,7 @@ class UberMapController extends GetxController {
             southwest: LatLng(sourceLatitude.value, sourceLongitude.value),
             northeast:
                 LatLng(destinationLatitude.value, destinationLongitude.value)),
-        50));
+        100));
     animateCamera(sourceLatitude.value, sourceLongitude.value);
   }
 

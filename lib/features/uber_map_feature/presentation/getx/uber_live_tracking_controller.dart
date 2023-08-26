@@ -12,6 +12,9 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:workmanager/workmanager.dart';
+
+import '../../../../core/notification/notification.dart';
 
 class UberLiveTrackingController extends GetxController {
   var liveLocLatitude = 0.0.obs;
@@ -19,6 +22,32 @@ class UberLiveTrackingController extends GetxController {
   var destinationLat = 0.0.obs;
   var destinationLng = 0.0.obs;
   var vehicleTypeName = ''.obs;
+
+  static const fetchBackground = "fetchBackground";
+
+  // a callable function to keep track driver location while app running in background
+  void callbackDispatcher() {
+    Workmanager().executeTask((task, inputData) async {
+      switch (task) {
+        case fetchBackground:
+          if (liveLocLatitude.value == 0.0) {
+            Get.snackbar(
+              "Alert",
+              "Turn on Location to use Live Tracking",
+              snackPosition: SnackPosition.BOTTOM,
+            );
+          }
+          Position driverLocation = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high);
+          liveLocLatitude.value = driverLocation.latitude;
+          liveLocLongitude.value = driverLocation.longitude;
+          Notification notification = Notification();
+          notification.showNotificationWithoutSound(driverLocation);
+          break;
+      }
+      return Future.value(true);
+    });
+  }
 
   final UberMapDirectionUsecase uberMapDirectionUsecase;
   final UberTripPaymentUseCase uberTripPaymentUseCase;
@@ -49,6 +78,20 @@ class UberLiveTrackingController extends GetxController {
     var initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    // init Workmanager
+    Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: true,
+    );
+
+    // register Workmanager
+    Workmanager().registerPeriodicTask(
+      "1",
+      fetchBackground,
+      frequency: const Duration(minutes: 2),
+    );
+
     // TODO: implement onInit
     super.onInit();
   }
@@ -64,6 +107,7 @@ class UberLiveTrackingController extends GetxController {
           ticker: 'ticker');
       var platformChannelSpecifics =
           NotificationDetails(android: androidPlatformChannelSpecifics);
+
       await flutterLocalNotificationsPlugin.show(
           rng.nextInt(100000), title, subtitle, platformChannelSpecifics,
           payload: 'item x');

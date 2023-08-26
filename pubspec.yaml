@@ -55,6 +55,8 @@ dev_dependencies:
   geolocator: ^10.0.0   # current loc
   geocoding: ^2.0.2   # place name to latlng
   flutter_polyline_points: ^1.0.0   # polyline on map
+  background_location_tracker: ^1.4.1  # track location in background
+  workmanager: ^0.5.1 # separate isolate from the main flutter isolate to track location in backgroud
 
   # state management packages
   equatable: ^2.0.3

@@ -58,6 +58,7 @@ class _UberMapLiveTrackingPageState extends State<UberMapLiveTrackingPage> {
       title: StepperText("Delivered package"),
     ),
   ];
+
   List<StepperData> stepperDataDestination = [
     StepperData(
       iconWidget: Container(
@@ -96,6 +97,7 @@ class _UberMapLiveTrackingPageState extends State<UberMapLiveTrackingPage> {
       title: StepperText("Delivered package"),
     ),
   ];
+
   @override
   void initState() {
     // TODO: implement initState
